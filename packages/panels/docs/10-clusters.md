@@ -62,6 +62,17 @@ use App\Filament\Clusters\Settings;
 protected static ?string $cluster = Settings::class;
 ```
 
+## Authorization
+
+You can prevent clusters from appearing in the menu by overriding the `canAccess()` method in your Cluster class. This is useful if you want to control which users can see the cluster in the navigation, and also which users can visit the cluster directly:
+
+```php
+public static function canAccess(): bool
+{
+    return auth()->user()->canManageSettings();
+}
+```
+
 ## Code structure recommendations for panels using clusters
 
 When using clusters, it is recommended that you move all of your resources and pages into a directory with the same name as the cluster. For example, here is a directory structure for a panel that uses a cluster called `Settings`, containing a `ColorResource` and two custom pages:
